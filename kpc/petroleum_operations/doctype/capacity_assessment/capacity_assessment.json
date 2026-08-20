@@ -1,0 +1,152 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "CAP-.YYYY.-.#####",
+ "creation": "2026-08-20 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "assessment_date",
+  "column_break_1",
+  "origin_terminal",
+  "destination_terminal",
+  "period_section",
+  "period_start",
+  "period_end",
+  "column_break_2",
+  "pipeline_capacity_kl_per_day",
+  "capacity_section",
+  "committed_kl",
+  "column_break_3",
+  "available_capacity_kl",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "assessment_date",
+   "fieldtype": "Date",
+   "label": "Assessment Date",
+   "reqd": 1,
+   "default": "Today",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "origin_terminal",
+   "fieldtype": "Link",
+   "label": "Origin Terminal",
+   "options": "Terminal",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "destination_terminal",
+   "fieldtype": "Link",
+   "label": "Destination Terminal",
+   "options": "Terminal",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "period_section",
+   "fieldtype": "Section Break",
+   "label": "Assessment Period"
+  },
+  {
+   "fieldname": "period_start",
+   "fieldtype": "Date",
+   "label": "Period Start",
+   "reqd": 1
+  },
+  {
+   "fieldname": "period_end",
+   "fieldtype": "Date",
+   "label": "Period End",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "pipeline_capacity_kl_per_day",
+   "fieldtype": "Float",
+   "label": "Pipeline Capacity (KL/day)",
+   "reqd": 1,
+   "precision": "3"
+  },
+  {
+   "fieldname": "capacity_section",
+   "fieldtype": "Section Break",
+   "label": "Commitment"
+  },
+  {
+   "fieldname": "committed_kl",
+   "fieldtype": "Float",
+   "label": "Committed (KL)",
+   "read_only": 1,
+   "precision": "3",
+   "description": "Sum of Approved Pipeline Batches on this route whose schedule overlaps the period."
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "available_capacity_kl",
+   "fieldtype": "Float",
+   "label": "Available Capacity (KL)",
+   "read_only": 1,
+   "precision": "3",
+   "bold": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "module": "Petroleum Operations",
+ "name": "Capacity Assessment",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Scheduler & Operations Controller",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Commercial Officer"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

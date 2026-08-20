@@ -1,0 +1,73 @@
+{
+ "actions": [],
+ "creation": "2026-08-20 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "dispatch",
+  "product",
+  "quantity_kl",
+  "tariff",
+  "rate_per_kl",
+  "amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "dispatch",
+   "fieldtype": "Link",
+   "label": "Dispatch",
+   "options": "Dispatch",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "product",
+   "fieldtype": "Link",
+   "label": "Product",
+   "options": "Item",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "quantity_kl",
+   "fieldtype": "Float",
+   "label": "Quantity (KL)",
+   "read_only": 1,
+   "precision": "3",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "tariff",
+   "fieldtype": "Link",
+   "label": "Tariff",
+   "options": "Tariff",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "rate_per_kl",
+   "fieldtype": "Currency",
+   "label": "Rate per KL",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Amount",
+   "read_only": 1,
+   "in_list_view": 1,
+   "bold": 1
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "module": "Petroleum Operations",
+ "name": "Invoice Line",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

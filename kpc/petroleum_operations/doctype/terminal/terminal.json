@@ -1,0 +1,123 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "field:terminal_code",
+ "creation": "2026-08-20 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "terminal_code",
+  "terminal_name",
+  "terminal_type",
+  "column_break_1",
+  "country",
+  "is_active",
+  "location_section",
+  "location"
+ ],
+ "fields": [
+  {
+   "fieldname": "terminal_code",
+   "fieldtype": "Data",
+   "label": "Terminal Code",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "terminal_name",
+   "fieldtype": "Data",
+   "label": "Terminal Name",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "terminal_type",
+   "fieldtype": "Select",
+   "label": "Terminal Type",
+   "options": "Loading\nDischarge\nStorage\nMulti-Purpose",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Data",
+   "label": "Country",
+   "default": "Kenya"
+  },
+  {
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Is Active",
+   "default": "1",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "location_section",
+   "fieldtype": "Section Break",
+   "label": "Location"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Small Text",
+   "label": "Location / Address"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "module": "Petroleum Operations",
+ "name": "Terminal",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Scheduler & Operations Controller",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Terminal Operator"
+  },
+  {
+   "read": 1,
+   "role": "Quality Analyst"
+  },
+  {
+   "read": 1,
+   "role": "Commercial Officer"
+  },
+  {
+   "read": 1,
+   "role": "Finance Officer"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

@@ -1,0 +1,197 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "RCN-.YYYY.-.#####",
+ "creation": "2026-08-20 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "is_submittable": 1,
+ "field_order": [
+  "terminal_receipt",
+  "journey_ref",
+  "column_break_1",
+  "dispatched_quantity_kl",
+  "received_quantity_kl",
+  "variance_section",
+  "variance_kl",
+  "variance_percent",
+  "column_break_2",
+  "tolerance_percent",
+  "within_tolerance",
+  "justification_section",
+  "justification",
+  "approval_section",
+  "reconciled_by",
+  "column_break_3",
+  "reconciled_on",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "terminal_receipt",
+   "fieldtype": "Link",
+   "label": "Terminal Receipt",
+   "options": "Terminal Receipt",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "journey_ref",
+   "fieldtype": "Link",
+   "label": "Journey Reference",
+   "options": "Journey",
+   "read_only": 1,
+   "fetch_from": "terminal_receipt.journey_ref",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "dispatched_quantity_kl",
+   "fieldtype": "Float",
+   "label": "Dispatched Quantity (KL)",
+   "read_only": 1,
+   "fetch_from": "terminal_receipt.dispatched_quantity_kl",
+   "precision": "3"
+  },
+  {
+   "fieldname": "received_quantity_kl",
+   "fieldtype": "Float",
+   "label": "Received Quantity (KL)",
+   "read_only": 1,
+   "fetch_from": "terminal_receipt.net_standard_volume_kl",
+   "precision": "3"
+  },
+  {
+   "fieldname": "variance_section",
+   "fieldtype": "Section Break",
+   "label": "Variance"
+  },
+  {
+   "fieldname": "variance_kl",
+   "fieldtype": "Float",
+   "label": "Variance (KL)",
+   "read_only": 1,
+   "precision": "3",
+   "in_list_view": 1,
+   "description": "Dispatched minus Received. Positive = loss in transit; negative = gain."
+  },
+  {
+   "fieldname": "variance_percent",
+   "fieldtype": "Percent",
+   "label": "Variance (%)",
+   "read_only": 1,
+   "in_list_view": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "tolerance_percent",
+   "fieldtype": "Percent",
+   "label": "Tolerance (%)",
+   "default": "0.5",
+   "reqd": 1,
+   "description": "Standard fiscal custody-transfer tolerance for pipeline transport."
+  },
+  {
+   "fieldname": "within_tolerance",
+   "fieldtype": "Check",
+   "label": "Within Tolerance",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "justification_section",
+   "fieldtype": "Section Break",
+   "label": "Justification",
+   "depends_on": "eval:!doc.within_tolerance"
+  },
+  {
+   "fieldname": "justification",
+   "fieldtype": "Small Text",
+   "label": "Justification",
+   "description": "Mandatory before this Reconciliation can be accepted (submitted) if the variance exceeds tolerance."
+  },
+  {
+   "fieldname": "approval_section",
+   "fieldtype": "Section Break",
+   "label": "Acceptance"
+  },
+  {
+   "fieldname": "reconciled_by",
+   "fieldtype": "Link",
+   "label": "Reconciled By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "reconciled_on",
+   "fieldtype": "Datetime",
+   "label": "Reconciled On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "module": "Petroleum Operations",
+ "name": "Reconciliation",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Finance Officer",
+   "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Scheduler & Operations Controller"
+  },
+  {
+   "read": 1,
+   "role": "Commercial Officer"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

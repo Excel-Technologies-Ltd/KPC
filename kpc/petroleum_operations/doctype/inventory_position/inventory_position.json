@@ -1,0 +1,162 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "IPO-.YYYY.-.#####",
+ "creation": "2026-08-20 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "journey_ref",
+  "tank",
+  "stock_owner",
+  "position_date",
+  "column_break_1",
+  "volumes_section",
+  "opening_volume_kl",
+  "receipts_kl",
+  "dispatches_kl",
+  "adjustments_kl",
+  "column_break_2",
+  "closing_volume_kl",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "journey_ref",
+   "fieldtype": "Link",
+   "label": "Journey Reference",
+   "options": "Journey",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "tank",
+   "fieldtype": "Link",
+   "label": "Tank",
+   "options": "Oil Tank",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "stock_owner",
+   "fieldtype": "Link",
+   "label": "Stock Owner",
+   "options": "Customer",
+   "description": "Party who owns the stock in custody. Leave blank for KPC-owned stock.",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "position_date",
+   "fieldtype": "Date",
+   "label": "Position Date",
+   "reqd": 1,
+   "default": "Today",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "volumes_section",
+   "fieldtype": "Section Break",
+   "label": "Volumes (KL)"
+  },
+  {
+   "fieldname": "opening_volume_kl",
+   "fieldtype": "Float",
+   "label": "Opening Volume (KL)",
+   "reqd": 1,
+   "precision": "3"
+  },
+  {
+   "fieldname": "receipts_kl",
+   "fieldtype": "Float",
+   "label": "Receipts (KL)",
+   "default": "0",
+   "precision": "3"
+  },
+  {
+   "fieldname": "dispatches_kl",
+   "fieldtype": "Float",
+   "label": "Dispatches (KL)",
+   "default": "0",
+   "precision": "3"
+  },
+  {
+   "fieldname": "adjustments_kl",
+   "fieldtype": "Float",
+   "label": "Adjustments (KL)",
+   "default": "0",
+   "precision": "3",
+   "description": "Gains(+)/Losses(-) not attributable to a receipt or dispatch."
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "closing_volume_kl",
+   "fieldtype": "Float",
+   "label": "Closing Volume (KL)",
+   "read_only": 1,
+   "precision": "3",
+   "bold": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "module": "Petroleum Operations",
+ "name": "Inventory Position",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Scheduler & Operations Controller",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Terminal Operator"
+  },
+  {
+   "read": 1,
+   "role": "Commercial Officer"
+  },
+  {
+   "read": 1,
+   "role": "Finance Officer"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

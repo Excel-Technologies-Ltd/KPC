@@ -1,0 +1,220 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "MOV-.YYYY.-.#####",
+ "creation": "2026-08-20 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "pipeline_batch",
+  "journey_ref",
+  "product",
+  "column_break_1",
+  "pipeline_route",
+  "origin_terminal",
+  "destination_terminal",
+  "movement_status",
+  "schedule_section",
+  "start_datetime",
+  "column_break_2",
+  "end_datetime",
+  "telemetry_section",
+  "monitored_pressure_bar",
+  "monitored_flow_rate_m3h",
+  "monitored_vibration_mm_s",
+  "column_break_3",
+  "anomaly_score",
+  "anomaly_severity",
+  "alert_triggered",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "pipeline_batch",
+   "fieldtype": "Link",
+   "label": "Pipeline Batch",
+   "options": "Pipeline Batch",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "journey_ref",
+   "fieldtype": "Link",
+   "label": "Journey Reference",
+   "options": "Journey",
+   "read_only": 1,
+   "fetch_from": "pipeline_batch.journey_ref",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "product",
+   "fieldtype": "Link",
+   "label": "Product",
+   "options": "Item",
+   "read_only": 1,
+   "fetch_from": "pipeline_batch.product"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "pipeline_route",
+   "fieldtype": "Select",
+   "label": "Pipeline Route",
+   "options": "Mombasa-Nairobi (Line 1)\nMombasa-Nairobi (Line 2)\nNairobi-Eldoret-Kisumu\nSinendet-Kisumu\nNairobi-Nanyuki",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "origin_terminal",
+   "fieldtype": "Link",
+   "label": "Origin Terminal",
+   "options": "Terminal",
+   "read_only": 1,
+   "fetch_from": "pipeline_batch.origin_terminal"
+  },
+  {
+   "fieldname": "destination_terminal",
+   "fieldtype": "Link",
+   "label": "Destination Terminal",
+   "options": "Terminal",
+   "read_only": 1,
+   "fetch_from": "pipeline_batch.destination_terminal"
+  },
+  {
+   "fieldname": "movement_status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Draft\nIn Transit\nCompleted\nHalted",
+   "default": "Draft",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "schedule_section",
+   "fieldtype": "Section Break",
+   "label": "Schedule"
+  },
+  {
+   "fieldname": "start_datetime",
+   "fieldtype": "Datetime",
+   "label": "Start Date/Time"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "end_datetime",
+   "fieldtype": "Datetime",
+   "label": "End Date/Time"
+  },
+  {
+   "fieldname": "telemetry_section",
+   "fieldtype": "Section Break",
+   "label": "AI Predictive Maintenance Telemetry",
+   "description": "Snapshot readings evaluated against the safe operating envelope on every save."
+  },
+  {
+   "fieldname": "monitored_pressure_bar",
+   "fieldtype": "Float",
+   "label": "Line Pressure (bar)",
+   "precision": "2"
+  },
+  {
+   "fieldname": "monitored_flow_rate_m3h",
+   "fieldtype": "Float",
+   "label": "Flow Rate (m3/h)",
+   "precision": "2"
+  },
+  {
+   "fieldname": "monitored_vibration_mm_s",
+   "fieldtype": "Float",
+   "label": "Pump Vibration (mm/s)",
+   "precision": "2"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "anomaly_score",
+   "fieldtype": "Float",
+   "label": "Anomaly Score (0-100)",
+   "read_only": 1,
+   "precision": "1",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "anomaly_severity",
+   "fieldtype": "Select",
+   "label": "Anomaly Severity",
+   "options": "Nominal\nLow\nMedium\nHigh\nCritical",
+   "default": "Nominal",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "alert_triggered",
+   "fieldtype": "Check",
+   "label": "AI Alert Raised",
+   "read_only": 1
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "module": "Petroleum Operations",
+ "name": "Movement",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Scheduler & Operations Controller",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Terminal Operator"
+  },
+  {
+   "read": 1,
+   "role": "Maintenance Manager"
+  },
+  {
+   "read": 1,
+   "role": "Commercial Officer"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

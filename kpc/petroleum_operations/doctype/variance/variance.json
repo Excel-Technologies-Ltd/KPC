@@ -1,0 +1,159 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "VAR-.YYYY.-.#####",
+ "creation": "2026-08-20 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "reconciliation",
+  "journey_ref",
+  "column_break_1",
+  "variance_kl",
+  "variance_percent",
+  "workflow_state",
+  "classification_section",
+  "loss_category",
+  "classification_notes",
+  "approval_section",
+  "approved_by",
+  "column_break_2",
+  "approved_on"
+ ],
+ "fields": [
+  {
+   "fieldname": "reconciliation",
+   "fieldtype": "Link",
+   "label": "Reconciliation",
+   "options": "Reconciliation",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "journey_ref",
+   "fieldtype": "Link",
+   "label": "Journey Reference",
+   "options": "Journey",
+   "read_only": 1,
+   "fetch_from": "reconciliation.journey_ref",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "variance_kl",
+   "fieldtype": "Float",
+   "label": "Variance (KL)",
+   "read_only": 1,
+   "fetch_from": "reconciliation.variance_kl",
+   "precision": "3",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "variance_percent",
+   "fieldtype": "Percent",
+   "label": "Variance (%)",
+   "read_only": 1,
+   "fetch_from": "reconciliation.variance_percent",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "workflow_state",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Pending Approval\nApproved\nRejected",
+   "default": "Pending Approval",
+   "read_only": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "classification_section",
+   "fieldtype": "Section Break",
+   "label": "Classification"
+  },
+  {
+   "fieldname": "loss_category",
+   "fieldtype": "Select",
+   "label": "Loss Category",
+   "options": "Evaporation\nMeasurement Tolerance\nTemperature Variation\nLine Fill Change\nTheft/Pilferage\nOperational Loss\nUnexplained\nOther",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "classification_notes",
+   "fieldtype": "Small Text",
+   "label": "Classification Notes"
+  },
+  {
+   "fieldname": "approval_section",
+   "fieldtype": "Section Break",
+   "label": "Approval"
+  },
+  {
+   "fieldname": "approved_by",
+   "fieldtype": "Link",
+   "label": "Approved/Rejected By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "approved_on",
+   "fieldtype": "Datetime",
+   "label": "Decided On",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "module": "Petroleum Operations",
+ "name": "Variance",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Scheduler & Operations Controller",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Finance Officer"
+  },
+  {
+   "read": 1,
+   "role": "Commercial Officer"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

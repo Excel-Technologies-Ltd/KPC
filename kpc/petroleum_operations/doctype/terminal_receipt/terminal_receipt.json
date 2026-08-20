@@ -1,0 +1,212 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "TRC-.YYYY.-.#####",
+ "creation": "2026-08-20 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "is_submittable": 1,
+ "field_order": [
+  "movement",
+  "journey_ref",
+  "column_break_1",
+  "destination_tank",
+  "receipt_datetime",
+  "reading_section",
+  "observed_level_mm",
+  "observed_temperature_c",
+  "water_dip_mm",
+  "density_at_15c",
+  "column_break_2",
+  "tank_state_at_receipt",
+  "calc_section",
+  "volume_correction_factor",
+  "gross_observed_volume_kl",
+  "column_break_3",
+  "net_standard_volume_kl",
+  "dispatched_quantity_kl",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "movement",
+   "fieldtype": "Link",
+   "label": "Movement",
+   "options": "Movement",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "journey_ref",
+   "fieldtype": "Link",
+   "label": "Journey Reference",
+   "options": "Journey",
+   "read_only": 1,
+   "fetch_from": "movement.journey_ref",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "destination_tank",
+   "fieldtype": "Link",
+   "label": "Destination Tank",
+   "options": "Oil Tank",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "receipt_datetime",
+   "fieldtype": "Datetime",
+   "label": "Receipt Date/Time",
+   "reqd": 1,
+   "default": "Now"
+  },
+  {
+   "fieldname": "reading_section",
+   "fieldtype": "Section Break",
+   "label": "Dip Reading"
+  },
+  {
+   "fieldname": "observed_level_mm",
+   "fieldtype": "Float",
+   "label": "Observed Level (mm)",
+   "reqd": 1,
+   "precision": "2"
+  },
+  {
+   "fieldname": "observed_temperature_c",
+   "fieldtype": "Float",
+   "label": "Observed Temperature (C)",
+   "reqd": 1,
+   "precision": "2"
+  },
+  {
+   "fieldname": "water_dip_mm",
+   "fieldtype": "Float",
+   "label": "Free Water Dip (mm)",
+   "default": "0",
+   "precision": "2"
+  },
+  {
+   "fieldname": "density_at_15c",
+   "fieldtype": "Float",
+   "label": "Density at 15C (kg/L)",
+   "reqd": 1,
+   "precision": "4"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "tank_state_at_receipt",
+   "fieldtype": "Data",
+   "label": "Tank State at Receipt",
+   "read_only": 1
+  },
+  {
+   "fieldname": "calc_section",
+   "fieldtype": "Section Break",
+   "label": "Calculated Standard Volume"
+  },
+  {
+   "fieldname": "volume_correction_factor",
+   "fieldtype": "Float",
+   "label": "Volume Correction Factor (VCF)",
+   "read_only": 1,
+   "precision": "6"
+  },
+  {
+   "fieldname": "gross_observed_volume_kl",
+   "fieldtype": "Float",
+   "label": "Gross Observed Volume (KL)",
+   "read_only": 1,
+   "precision": "3"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "net_standard_volume_kl",
+   "fieldtype": "Float",
+   "label": "Net Standard Volume @15C (KL)",
+   "read_only": 1,
+   "precision": "3",
+   "bold": 1
+  },
+  {
+   "fieldname": "dispatched_quantity_kl",
+   "fieldtype": "Float",
+   "label": "Dispatched Quantity (KL)",
+   "read_only": 1,
+   "precision": "3",
+   "description": "Planned volume from the originating Pipeline Batch, for Reconciliation (Phase 4)."
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "module": "Petroleum Operations",
+ "name": "Terminal Receipt",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Terminal Operator",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Scheduler & Operations Controller",
+   "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Finance Officer"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

@@ -1,0 +1,145 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "ALC-.YYYY.-.#####",
+ "creation": "2026-08-20 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "is_submittable": 1,
+ "field_order": [
+  "nomination",
+  "reconciliation",
+  "journey_ref",
+  "column_break_1",
+  "customer",
+  "product",
+  "allocation_section",
+  "allocated_quantity_kl",
+  "allocation_basis",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "nomination",
+   "fieldtype": "Link",
+   "label": "Nomination",
+   "options": "Nomination",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "reconciliation",
+   "fieldtype": "Link",
+   "label": "Reconciliation",
+   "options": "Reconciliation",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "journey_ref",
+   "fieldtype": "Link",
+   "label": "Journey Reference",
+   "options": "Journey",
+   "read_only": 1,
+   "fetch_from": "nomination.journey_ref",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer",
+   "read_only": 1,
+   "fetch_from": "nomination.customer",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "product",
+   "fieldtype": "Link",
+   "label": "Product",
+   "options": "Item",
+   "read_only": 1,
+   "fetch_from": "nomination.product"
+  },
+  {
+   "fieldname": "allocation_section",
+   "fieldtype": "Section Break",
+   "label": "Allocation"
+  },
+  {
+   "fieldname": "allocated_quantity_kl",
+   "fieldtype": "Float",
+   "label": "Allocated Quantity (KL)",
+   "reqd": 1,
+   "precision": "3",
+   "in_list_view": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "allocation_basis",
+   "fieldtype": "Select",
+   "label": "Allocation Basis",
+   "options": "Nomination Match\nPro-Rata\nManual Override",
+   "default": "Nomination Match",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "module": "Petroleum Operations",
+ "name": "Allocation",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Commercial Officer",
+   "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Finance Officer"
+  },
+  {
+   "read": 1,
+   "role": "Terminal Operator"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

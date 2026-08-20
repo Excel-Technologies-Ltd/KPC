@@ -1,0 +1,173 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "DSP-.YYYY.-.#####",
+ "creation": "2026-08-20 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "is_submittable": 1,
+ "field_order": [
+  "allocation",
+  "journey_ref",
+  "customer",
+  "column_break_1",
+  "destination_tank",
+  "dispatch_datetime",
+  "dispatch_mode",
+  "detail_section",
+  "dispatched_quantity_kl",
+  "column_break_2",
+  "vehicle_or_vessel_ref",
+  "driver_or_agent",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "allocation",
+   "fieldtype": "Link",
+   "label": "Allocation",
+   "options": "Allocation",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "journey_ref",
+   "fieldtype": "Link",
+   "label": "Journey Reference",
+   "options": "Journey",
+   "read_only": 1,
+   "fetch_from": "allocation.journey_ref",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer",
+   "read_only": 1,
+   "fetch_from": "allocation.customer",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "destination_tank",
+   "fieldtype": "Link",
+   "label": "Dispatching From Tank",
+   "options": "Oil Tank",
+   "reqd": 1
+  },
+  {
+   "fieldname": "dispatch_datetime",
+   "fieldtype": "Datetime",
+   "label": "Dispatch Date/Time",
+   "reqd": 1,
+   "default": "Now"
+  },
+  {
+   "fieldname": "dispatch_mode",
+   "fieldtype": "Select",
+   "label": "Dispatch Mode",
+   "options": "Truck\nRail\nEx-Pipeline",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "detail_section",
+   "fieldtype": "Section Break",
+   "label": "Consignment"
+  },
+  {
+   "fieldname": "dispatched_quantity_kl",
+   "fieldtype": "Float",
+   "label": "Dispatched Quantity (KL)",
+   "reqd": 1,
+   "precision": "3",
+   "in_list_view": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "vehicle_or_vessel_ref",
+   "fieldtype": "Data",
+   "label": "Vehicle/Vessel Reference",
+   "description": "Truck plate, rail wagon number, etc."
+  },
+  {
+   "fieldname": "driver_or_agent",
+   "fieldtype": "Data",
+   "label": "Driver / Clearing Agent"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "module": "Petroleum Operations",
+ "name": "Dispatch",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Terminal Operator",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Scheduler & Operations Controller",
+   "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Commercial Officer"
+  },
+  {
+   "read": 1,
+   "role": "Finance Officer"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

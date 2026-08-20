@@ -1,0 +1,179 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "field:tank_code",
+ "creation": "2026-08-20 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "tank_code",
+  "tank_name",
+  "terminal",
+  "product",
+  "column_break_1",
+  "current_state",
+  "state_reason",
+  "state_changed_on",
+  "state_changed_by",
+  "capacity_section",
+  "capacity_kl",
+  "safe_fill_capacity_kl",
+  "column_break_2",
+  "dead_stock_kl",
+  "reference_height_mm"
+ ],
+ "fields": [
+  {
+   "fieldname": "tank_code",
+   "fieldtype": "Data",
+   "label": "Tank Code",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "tank_name",
+   "fieldtype": "Data",
+   "label": "Tank Name",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "terminal",
+   "fieldtype": "Link",
+   "label": "Terminal",
+   "options": "Terminal",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "product",
+   "fieldtype": "Link",
+   "label": "Designated Product",
+   "options": "Item",
+   "description": "Product this tank is dedicated to. Left blank for multi-product/segregated tanks."
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "current_state",
+   "fieldtype": "Select",
+   "label": "Current State",
+   "options": "Active\nMaintenance\nQuarantine\nDecommissioned",
+   "default": "Active",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "state_reason",
+   "fieldtype": "Small Text",
+   "label": "State Reason",
+   "depends_on": "eval:doc.current_state != 'Active'",
+   "mandatory_depends_on": "eval:doc.current_state != 'Active'"
+  },
+  {
+   "fieldname": "state_changed_on",
+   "fieldtype": "Datetime",
+   "label": "State Changed On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "state_changed_by",
+   "fieldtype": "Link",
+   "label": "State Changed By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "capacity_section",
+   "fieldtype": "Section Break",
+   "label": "Capacity & Calibration"
+  },
+  {
+   "fieldname": "capacity_kl",
+   "fieldtype": "Float",
+   "label": "Shell Capacity (KL)",
+   "reqd": 1,
+   "precision": "3"
+  },
+  {
+   "fieldname": "safe_fill_capacity_kl",
+   "fieldtype": "Float",
+   "label": "Safe Fill Capacity (KL)",
+   "precision": "3"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "dead_stock_kl",
+   "fieldtype": "Float",
+   "label": "Dead Stock (KL)",
+   "precision": "3"
+  },
+  {
+   "fieldname": "reference_height_mm",
+   "fieldtype": "Float",
+   "label": "Reference Height at Shell Capacity (mm)",
+   "precision": "2",
+   "description": "Dip height corresponding to Shell Capacity. Used for linear volume approximation until a certified strapping table is loaded."
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "module": "Petroleum Operations",
+ "name": "Oil Tank",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Scheduler & Operations Controller",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Terminal Operator"
+  },
+  {
+   "read": 1,
+   "role": "Quality Analyst"
+  },
+  {
+   "read": 1,
+   "role": "Commercial Officer"
+  },
+  {
+   "read": 1,
+   "role": "Finance Officer"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

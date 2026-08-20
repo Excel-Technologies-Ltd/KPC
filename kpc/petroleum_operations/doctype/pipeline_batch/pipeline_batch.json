@@ -1,0 +1,176 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "PBT-.YYYY.-.#####",
+ "creation": "2026-08-20 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "is_submittable": 1,
+ "field_order": [
+  "nomination",
+  "journey_ref",
+  "product",
+  "column_break_1",
+  "origin_terminal",
+  "destination_terminal",
+  "batch_sequence_no",
+  "volume_section",
+  "planned_volume_kl",
+  "capacity_assessment",
+  "schedule_section",
+  "scheduled_start",
+  "column_break_2",
+  "scheduled_end",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "nomination",
+   "fieldtype": "Link",
+   "label": "Nomination",
+   "options": "Nomination",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "journey_ref",
+   "fieldtype": "Link",
+   "label": "Journey Reference",
+   "options": "Journey",
+   "read_only": 1,
+   "fetch_from": "nomination.journey_ref",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "product",
+   "fieldtype": "Link",
+   "label": "Product",
+   "options": "Item",
+   "read_only": 1,
+   "fetch_from": "nomination.product"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "origin_terminal",
+   "fieldtype": "Link",
+   "label": "Origin Terminal",
+   "options": "Terminal",
+   "read_only": 1,
+   "fetch_from": "nomination.origin_terminal",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "destination_terminal",
+   "fieldtype": "Link",
+   "label": "Destination Terminal",
+   "options": "Terminal",
+   "read_only": 1,
+   "fetch_from": "nomination.destination_terminal",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "batch_sequence_no",
+   "fieldtype": "Int",
+   "label": "Pumping Sequence No",
+   "description": "Position of this slug in the pipeline interface (pumping) sequence."
+  },
+  {
+   "fieldname": "volume_section",
+   "fieldtype": "Section Break",
+   "label": "Volume & Capacity"
+  },
+  {
+   "fieldname": "planned_volume_kl",
+   "fieldtype": "Float",
+   "label": "Planned Volume (KL)",
+   "reqd": 1,
+   "precision": "3",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "capacity_assessment",
+   "fieldtype": "Link",
+   "label": "Capacity Assessment",
+   "options": "Capacity Assessment",
+   "description": "Route capacity plan this batch is validated against."
+  },
+  {
+   "fieldname": "schedule_section",
+   "fieldtype": "Section Break",
+   "label": "Schedule"
+  },
+  {
+   "fieldname": "scheduled_start",
+   "fieldtype": "Datetime",
+   "label": "Scheduled Start",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "scheduled_end",
+   "fieldtype": "Datetime",
+   "label": "Scheduled End",
+   "reqd": 1
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "module": "Petroleum Operations",
+ "name": "Pipeline Batch",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Scheduler & Operations Controller",
+   "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Commercial Officer"
+  },
+  {
+   "read": 1,
+   "role": "Terminal Operator"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

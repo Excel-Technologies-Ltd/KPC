@@ -1,7 +1,10 @@
 app_name = "kpc"
-app_title = "Kpc"
+app_title = "KPC Operations"
 app_publisher = "ArcApps"
-app_description = "Kenya Pipeline Company"
+app_description = (
+	"Petroleum Operations Platform for Kenya Pipeline Company - tracks cargo from vessel "
+	"arrival to financial posting under a single Golden Thread (journey_ref)."
+)
 app_email = "azmin@excelbd.com"
 app_license = "MIT"
 
@@ -116,13 +119,15 @@ app_license = "MIT"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"Sales Invoice": {
+		# Stamps journey_ref (a custom field, see patches/v0_0/add_accounts_custom_fields)
+		# onto this Sales Invoice's GL Entries once ERPNext has created them,
+		# and again on cancellation for the reversal entries.
+		"on_submit": "kpc.petroleum_operations.integrations.accounts.propagate_journey_ref_to_gl_entries",
+		"on_cancel": "kpc.petroleum_operations.integrations.accounts.reverse_financial_posting",
+	}
+}
 
 # Scheduled Tasks
 # ---------------
