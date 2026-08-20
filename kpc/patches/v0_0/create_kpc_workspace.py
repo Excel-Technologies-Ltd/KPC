@@ -21,6 +21,7 @@ SHORTCUTS = [
 	("Reconciliation", "DocType", None),
 	("Invoice", "DocType", None),
 	("Financial Posting", "DocType", None),
+	("Delivery Note", "DocType", None),
 ]
 
 # (card_label, [doctype, ...])
@@ -44,6 +45,10 @@ CARDS = [
 	),
 	("Phase 4 - Reconciliation & Outbound", ["Reconciliation", "Variance", "Allocation", "Dispatch"]),
 	("Phase 5 - Billing & Financials", ["Tariff", "Invoice", "Financial Posting"]),
+	(
+		"ERPNext Integration (Accounts & Stock)",
+		["Warehouse", "Stock Entry", "Delivery Note", "Sales Invoice"],
+	),
 ]
 
 

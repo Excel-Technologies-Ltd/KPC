@@ -12,7 +12,17 @@ Run once with:
 
 Safe to re-run: every record is created only if it doesn't already exist,
 keyed on the demo's fixed business identifiers (vessel name, terminal
-codes, etc.) rather than autoname counters.
+codes, etc.) rather than autoname counters. If an earlier run left an
+*incomplete* journey (e.g. it predates a feature added since, or a step
+failed partway), re-running create_demo_data() will not touch it - use
+reset_demo_data() first:
+
+    bench --site <site> execute kpc.demo_data.reset_demo_data
+
+This cancels and deletes everything downstream of the demo's Oil Shipment
+(which is immutable by design - see OilShipment.on_trash - so it is always
+reused, never recreated) and rewinds the Journey back to Step 1, so the
+next create_demo_data() rebuilds Steps 2-13 from scratch.
 """
 
 from __future__ import annotations
@@ -23,6 +33,44 @@ from frappe.utils import add_days, add_to_date, now_datetime, today
 COMPANY = "Kenya Pipeline Company"
 CUSTOMER = "Savannah Fuels Distributors"
 
+# Doctypes carrying journey_ref directly, in the order they must be
+# *cancelled* (most-downstream/last-created first) before they can be
+# deleted. Financial Posting isn't submittable, so it's just deleted.
+_SUBMITTABLE_DOWNSTREAM_DOCTYPES = [
+	"Invoice",
+	"Dispatch",
+	"Allocation",
+	"Reconciliation",
+	"Maintenance Work Order",
+	"Terminal Receipt",
+	"Pipeline Batch",
+	"Nomination",
+	"Tank Measurement",
+]
+_NON_SUBMITTABLE_DOWNSTREAM_DOCTYPES = [
+	"Financial Posting",
+	"Variance",
+	"AI Recommendation",
+	"AI Prediction",
+	"AI Alert",
+	"Movement",
+	"Quality Result",
+	"Inventory Position",
+]
+
+
+def _journey_is_fully_built(journey_ref: str) -> bool:
+	"""'Complete' means more than reaching Step 13 - a journey built by an
+	older version of this script can be at Step 13 while still missing a
+	feature added since (e.g. Dispatch.delivery_note, added when the
+	ERPNext Stock integration was introduced). Check for that explicitly
+	rather than trusting current_step alone."""
+	if frappe.db.get_value("Journey", journey_ref, "current_step") != "13. Financial Posting":
+		return False
+
+	dispatches = frappe.get_all("Dispatch", filters={"journey_ref": journey_ref}, pluck="delivery_note")
+	return bool(dispatches) and all(dispatches)
+
 
 def create_demo_data():
 	frappe.set_user("Administrator")
@@ -31,12 +79,57 @@ def create_demo_data():
 	product = _create_product()
 	tanks = _create_tanks(terminals, product)
 	customer = _create_customer()
+	tariff = _create_tariff(terminals, product)
 
-	journey_ref = _run_golden_thread(terminals, product, tanks, customer)
+	journey_ref = _run_golden_thread(terminals, product, tanks, customer, tariff)
 
 	frappe.db.commit()
 	_print_summary(journey_ref)
 	return journey_ref
+
+
+def reset_demo_data(vessel_name: str = "MT African Pride"):
+	"""Cancel and delete everything downstream of the demo Oil Shipment so
+	create_demo_data() can rebuild Steps 2-13 cleanly. The Oil Shipment and
+	Journey themselves are kept (Oil Shipment cannot be deleted by design);
+	the Journey's audit log is rewound to just its Step 1 entry."""
+	frappe.set_user("Administrator")
+
+	journey_ref = frappe.db.get_value("Oil Shipment", {"vessel_name": vessel_name}, "journey_ref")
+	if not journey_ref:
+		print(f"No demo journey found for vessel '{vessel_name}' - nothing to reset.")
+		return
+
+	journey = frappe.get_doc("Journey", journey_ref)
+	if _journey_is_fully_built(journey_ref):
+		print(f"Journey {journey_ref} is already complete - nothing to reset.")
+		return
+
+	capacity_assessment = frappe.db.get_value(
+		"Pipeline Batch", {"journey_ref": journey_ref}, "capacity_assessment"
+	)
+
+	for doctype in _SUBMITTABLE_DOWNSTREAM_DOCTYPES:
+		for name in frappe.get_all(doctype, filters={"journey_ref": journey_ref}, pluck="name"):
+			doc = frappe.get_doc(doctype, name)
+			if doc.docstatus == 1:
+				doc.cancel()
+			frappe.delete_doc(doctype, name, ignore_permissions=True, force=True)
+
+	for doctype in _NON_SUBMITTABLE_DOWNSTREAM_DOCTYPES:
+		for name in frappe.get_all(doctype, filters={"journey_ref": journey_ref}, pluck="name"):
+			frappe.delete_doc(doctype, name, ignore_permissions=True, force=True)
+
+	if capacity_assessment:
+		frappe.delete_doc("Capacity Assessment", capacity_assessment, ignore_permissions=True, force=True)
+
+	journey.reload()
+	journey.journey_log = [row for row in journey.journey_log if row.reference_doctype == "Oil Shipment"]
+	journey.current_step = "1. Shipment"
+	journey.save(ignore_permissions=True)
+
+	frappe.db.commit()
+	print(f"Reset {journey_ref} back to Step 1. Run create_demo_data() to rebuild Steps 2-13.")
 
 
 # ---------------------------------------------------------------------------
@@ -50,11 +143,13 @@ def _create_terminals():
 			"terminal_name": "Mombasa Terminal",
 			"terminal_type": "Discharge",
 			"location": "Mombasa, Kenya",
+			"company": COMPANY,
 		},
 		"NBO-01": {
 			"terminal_name": "Nairobi Terminal (Embakasi)",
 			"terminal_type": "Loading",
 			"location": "Nairobi, Kenya",
+			"company": COMPANY,
 		},
 	}
 	terminals = {}
@@ -113,6 +208,13 @@ def _create_tanks(terminals, product):
 					**fields,
 				}
 			).insert()
+		elif not frappe.db.get_value("Oil Tank", code, "warehouse"):
+			# Tank predates the Warehouse-provisioning feature - before_insert
+			# only fires on creation, so backfill it explicitly here.
+			from kpc.petroleum_operations.integrations.stock import get_or_create_tank_warehouse
+
+			tank = frappe.get_doc("Oil Tank", code)
+			tank.db_set("warehouse", get_or_create_tank_warehouse(tank), update_modified=False)
 		tanks[code] = code
 	return tanks
 
@@ -130,36 +232,66 @@ def _create_customer():
 	return CUSTOMER
 
 
+def _create_tariff(terminals, product):
+	"""Created here, alongside the other masters, rather than at Invoice
+	time - a Tariff is a rate card that exists ahead of any specific
+	delivery, not something decided per-invoice. This also means Dispatch
+	(Step 11) can bill Delivery Notes at the real commercial rate instead
+	of a rough Item reference price - see integrations.stock.resolve_delivery_rate."""
+	filters = {
+		"product": product,
+		"origin_terminal": terminals["MSA-01"],
+		"destination_terminal": terminals["NBO-01"],
+	}
+	name = frappe.db.get_value("Tariff", filters)
+	if name:
+		return name
+
+	tariff = frappe.get_doc({"doctype": "Tariff", "rate_per_kl": 3500, "currency": "KES", **filters}).insert()
+	return tariff.name
+
+
 # ---------------------------------------------------------------------------
 # The Golden Thread - one journey, all 13 steps
 # ---------------------------------------------------------------------------
 
 
-def _run_golden_thread(terminals, product, tanks, customer) -> str:
+def _run_golden_thread(terminals, product, tanks, customer, tariff) -> str:
+	"""Steps 2-13 below assume nothing downstream of the Oil Shipment exists
+	yet - true on a first run, and true again after reset_demo_data() has
+	cancelled/deleted everything downstream of an incomplete journey (Oil
+	Shipment itself is immutable by design - see OilShipment.on_trash - so
+	a reset can never delete it; it can only be reused)."""
 	vessel_name = "MT African Pride"
-	existing = frappe.db.get_value("Oil Shipment", {"vessel_name": vessel_name}, "journey_ref")
+	existing = frappe.db.get_value(
+		"Oil Shipment", {"vessel_name": vessel_name}, ["name", "journey_ref"], as_dict=True
+	)
+
 	if existing:
-		return existing
+		if _journey_is_fully_built(existing.journey_ref):
+			return existing.journey_ref
+		shipment = frappe.get_doc("Oil Shipment", existing.name)
+		journey_ref = existing.journey_ref
+	else:
+		# Step 1: Shipment
+		shipment = frappe.get_doc(
+			{
+				"doctype": "Oil Shipment",
+				"vessel_name": vessel_name,
+				"vessel_imo_number": "IMO9876543",
+				"bill_of_lading_no": "BL-KPC-2026-0417",
+				"product": product,
+				"terminal": terminals["MSA-01"],
+				"planned_quantity_kl": 5000,
+				"eta": now_datetime(),
+			}
+		).insert()
+		journey_ref = shipment.journey_ref
 
-	# Step 1: Shipment
-	shipment = frappe.get_doc(
-		{
-			"doctype": "Oil Shipment",
-			"vessel_name": vessel_name,
-			"vessel_imo_number": "IMO9876543",
-			"bill_of_lading_no": "BL-KPC-2026-0417",
-			"product": product,
-			"terminal": terminals["MSA-01"],
-			"planned_quantity_kl": 5000,
-			"eta": now_datetime(),
-		}
-	).insert()
-	journey_ref = shipment.journey_ref
-
-	for state in ("Vessel Arrived", "Discharging", "Received"):
-		shipment.reload()
-		shipment.workflow_state = state
-		shipment.save()
+		for state in ("Vessel Arrived", "Discharging", "Received"):
+			shipment.reload()
+			shipment.workflow_state = state
+			shipment.save()
 
 	# Step 2: Receipt (Tank Measurement)
 	tank_measurement = frappe.get_doc(
@@ -386,26 +518,8 @@ def _run_golden_thread(terminals, product, tanks, customer) -> str:
 	).insert()
 	dispatch_2.submit()
 
-	# Step 12: Invoice (Tariff + rated lines -> real Sales Invoice on submit)
-	tariff_filters = {
-		"product": product,
-		"origin_terminal": terminals["MSA-01"],
-		"destination_terminal": terminals["NBO-01"],
-	}
-	if not frappe.db.exists("Tariff", tariff_filters):
-		tariff = frappe.get_doc(
-			{
-				"doctype": "Tariff",
-				"product": product,
-				"origin_terminal": terminals["MSA-01"],
-				"destination_terminal": terminals["NBO-01"],
-				"rate_per_kl": 3500,
-				"currency": "KES",
-			}
-		).insert()
-	else:
-		tariff = frappe.get_doc("Tariff", frappe.db.get_value("Tariff", tariff_filters))
-
+	# Step 12: Invoice (Tariff was already created as a master, above - see
+	# _create_tariff) -> rated lines -> real Sales Invoice on submit
 	invoice = frappe.get_doc(
 		{
 			"doctype": "Invoice",
@@ -413,8 +527,8 @@ def _run_golden_thread(terminals, product, tanks, customer) -> str:
 			"customer": customer,
 			"company": COMPANY,
 			"lines": [
-				{"dispatch": dispatch_1.name, "tariff": tariff.name},
-				{"dispatch": dispatch_2.name, "tariff": tariff.name},
+				{"dispatch": dispatch_1.name, "tariff": tariff},
+				{"dispatch": dispatch_2.name, "tariff": tariff},
 			],
 		}
 	).insert()
@@ -435,6 +549,32 @@ def _print_summary(journey_ref: str):
 	print("-" * 72)
 	for row in journey.journey_log:
 		print(f"  {row.step:<26} {row.reference_doctype:<22} {row.reference_name}")
+
+	print("-" * 72)
+	print("ERPNext Stock & Accounts (created alongside the KPC records above):")
+	tank_names = ("TK-101", "TK-201")
+	warehouses = frappe.get_all("Warehouse", filters={"warehouse_name": ["in", tank_names]}, pluck="name")
+	for name in warehouses:
+		qty = frappe.db.get_value("Bin", {"warehouse": name, "item_code": "AGO-DIESEL"}, "actual_qty") or 0
+		print(f"  Warehouse            {name:<22} {qty} KL on hand")
+
+	stock_entries = frappe.get_all(
+		"Stock Entry",
+		filters={"journey_ref": journey_ref},
+		fields=["name", "stock_entry_type"],
+		order_by="creation",
+	)
+	for row in stock_entries:
+		print(f"  Stock Entry          {row.stock_entry_type:<22} {row.name}")
+	for row in frappe.get_all(
+		"Delivery Note", filters={"journey_ref": journey_ref}, fields=["name", "grand_total"], order_by="creation"
+	):
+		print(f"  Delivery Note        {row.name:<22} KES {row.grand_total:,.2f}")
+	invoice = frappe.db.get_value("Invoice", {"journey_ref": journey_ref}, "sales_invoice")
+	if invoice:
+		si = frappe.db.get_value("Sales Invoice", invoice, "grand_total")
+		print(f"  Sales Invoice        {invoice:<22} KES {si:,.2f}")
+
 	print("=" * 72)
 	print(f"Open the KPC workspace in Desk, or go straight to /app/journey/{journey_ref}")
 	print("=" * 72 + "\n")

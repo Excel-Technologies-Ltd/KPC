@@ -1,0 +1,362 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"kpc-header-quick-access\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Quick Access</b></span>\",\"col\":12}},{\"id\":\"kpc-shortcut-journey\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Journey\",\"col\":3}},{\"id\":\"kpc-shortcut-oil-shipment\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Oil Shipment\",\"col\":3}},{\"id\":\"kpc-shortcut-nomination\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Nomination\",\"col\":3}},{\"id\":\"kpc-shortcut-movement\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Movement\",\"col\":3}},{\"id\":\"kpc-shortcut-ai-alert\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"AI Alert\",\"col\":3}},{\"id\":\"kpc-shortcut-reconciliation\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Reconciliation\",\"col\":3}},{\"id\":\"kpc-shortcut-invoice\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Invoice\",\"col\":3}},{\"id\":\"kpc-shortcut-financial-posting\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Financial Posting\",\"col\":3}},{\"id\":\"kpc-spacer-1\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"kpc-header-thread\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>The 13-Step Golden Thread</b></span>\",\"col\":12}},{\"id\":\"kpc-card-golden-thread\",\"type\":\"card\",\"data\":{\"card_name\":\"Golden Thread\",\"col\":4}},{\"id\":\"kpc-card-phase-1---inbound-logistics---storage\",\"type\":\"card\",\"data\":{\"card_name\":\"Phase 1 - Inbound Logistics & Storage\",\"col\":4}},{\"id\":\"kpc-card-phase-2---commercial-planning\",\"type\":\"card\",\"data\":{\"card_name\":\"Phase 2 - Commercial Planning\",\"col\":4}},{\"id\":\"kpc-card-phase-3---pipeline-operations---ai\",\"type\":\"card\",\"data\":{\"card_name\":\"Phase 3 - Pipeline Operations & AI\",\"col\":4}},{\"id\":\"kpc-card-phase-4---reconciliation---outbound\",\"type\":\"card\",\"data\":{\"card_name\":\"Phase 4 - Reconciliation & Outbound\",\"col\":4}},{\"id\":\"kpc-card-phase-5---billing---financials\",\"type\":\"card\",\"data\":{\"card_name\":\"Phase 5 - Billing & Financials\",\"col\":4}}]",
+ "creation": "2026-08-20 10:55:09.179899",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "hide_custom": 0,
+ "icon": "stock",
+ "idx": 0,
+ "is_hidden": 0,
+ "label": "KPC",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Golden Thread",
+   "link_count": 0,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Journey",
+   "link_count": 0,
+   "link_to": "Journey",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Phase 1 - Inbound Logistics & Storage",
+   "link_count": 0,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Terminal",
+   "link_count": 0,
+   "link_to": "Terminal",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Oil Tank",
+   "link_count": 0,
+   "link_to": "Oil Tank",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Oil Shipment",
+   "link_count": 0,
+   "link_to": "Oil Shipment",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Tank Measurement",
+   "link_count": 0,
+   "link_to": "Tank Measurement",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Quality Result",
+   "link_count": 0,
+   "link_to": "Quality Result",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Inventory Position",
+   "link_count": 0,
+   "link_to": "Inventory Position",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Phase 2 - Commercial Planning",
+   "link_count": 0,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Nomination",
+   "link_count": 0,
+   "link_to": "Nomination",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Capacity Assessment",
+   "link_count": 0,
+   "link_to": "Capacity Assessment",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Pipeline Batch",
+   "link_count": 0,
+   "link_to": "Pipeline Batch",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Phase 3 - Pipeline Operations & AI",
+   "link_count": 0,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Movement",
+   "link_count": 0,
+   "link_to": "Movement",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "AI Alert",
+   "link_count": 0,
+   "link_to": "AI Alert",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "AI Prediction",
+   "link_count": 0,
+   "link_to": "AI Prediction",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "AI Recommendation",
+   "link_count": 0,
+   "link_to": "AI Recommendation",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Maintenance Work Order",
+   "link_count": 0,
+   "link_to": "Maintenance Work Order",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Terminal Receipt",
+   "link_count": 0,
+   "link_to": "Terminal Receipt",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Phase 4 - Reconciliation & Outbound",
+   "link_count": 0,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Reconciliation",
+   "link_count": 0,
+   "link_to": "Reconciliation",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Variance",
+   "link_count": 0,
+   "link_to": "Variance",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Allocation",
+   "link_count": 0,
+   "link_to": "Allocation",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Dispatch",
+   "link_count": 0,
+   "link_to": "Dispatch",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Phase 5 - Billing & Financials",
+   "link_count": 0,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Tariff",
+   "link_count": 0,
+   "link_to": "Tariff",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Invoice",
+   "link_count": 0,
+   "link_to": "Invoice",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Financial Posting",
+   "link_count": 0,
+   "link_to": "Financial Posting",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  }
+ ],
+ "modified": "2026-08-20 12:32:28.056374",
+ "modified_by": "farid@excelbd.com",
+ "module": "Petroleum Operations",
+ "name": "KPC",
+ "number_cards": [],
+ "owner": "Administrator",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 1.0,
+ "shortcuts": [
+  {
+   "doc_view": "List",
+   "icon": "octicon octicon-link",
+   "label": "Journey",
+   "link_to": "Journey",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Oil Shipment",
+   "link_to": "Oil Shipment",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Nomination",
+   "link_to": "Nomination",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Movement",
+   "link_to": "Movement",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "AI Alert",
+   "link_to": "AI Alert",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Reconciliation",
+   "link_to": "Reconciliation",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Invoice",
+   "link_to": "Invoice",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Financial Posting",
+   "link_to": "Financial Posting",
+   "type": "DocType"
+  }
+ ],
+ "title": "KPC"
+}

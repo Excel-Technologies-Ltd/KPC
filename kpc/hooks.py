@@ -126,7 +126,17 @@ doc_events = {
 		# and again on cancellation for the reversal entries.
 		"on_submit": "kpc.petroleum_operations.integrations.accounts.propagate_journey_ref_to_gl_entries",
 		"on_cancel": "kpc.petroleum_operations.integrations.accounts.reverse_financial_posting",
-	}
+	},
+	"Delivery Note": {
+		# Same pattern, stock side: stamps journey_ref onto the Stock Ledger
+		# Entries this Delivery Note creates (see patches/v0_0/add_stock_custom_fields).
+		"on_submit": "kpc.petroleum_operations.integrations.stock.propagate_journey_ref_to_stock_ledger",
+		"on_cancel": "kpc.petroleum_operations.integrations.stock.propagate_journey_ref_to_stock_ledger",
+	},
+	"Stock Entry": {
+		"on_submit": "kpc.petroleum_operations.integrations.stock.propagate_journey_ref_to_stock_ledger",
+		"on_cancel": "kpc.petroleum_operations.integrations.stock.propagate_journey_ref_to_stock_ledger",
+	},
 }
 
 # Scheduled Tasks

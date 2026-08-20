@@ -6,6 +6,7 @@ from frappe import _
 from frappe.model.document import Document
 from frappe.utils import flt
 
+from kpc.petroleum_operations.integrations.stock import post_material_transfer, resolve_origin_tank
 from kpc.petroleum_operations.utils import (
 	assert_tank_available,
 	calculate_standard_volume,
@@ -50,4 +51,15 @@ class TerminalReceipt(Document):
 		# becomes customer-owned once Allocation (Step 10) assigns it.
 		record_inventory_movement(
 			self.destination_tank, self.journey_ref, receipts_kl=self.net_standard_volume_kl
+		)
+		self.post_stock_transfer()
+
+	def post_stock_transfer(self):
+		origin_tank_name = resolve_origin_tank(self.journey_ref)
+		origin_tank = frappe.get_doc("Oil Tank", origin_tank_name)
+		destination_tank = frappe.get_doc("Oil Tank", self.destination_tank)
+		product = frappe.db.get_value("Movement", self.movement, "product")
+
+		post_material_transfer(
+			origin_tank.warehouse, destination_tank.warehouse, product, self.net_standard_volume_kl, self.journey_ref
 		)

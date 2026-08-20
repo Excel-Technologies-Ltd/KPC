@@ -6,8 +6,13 @@ from frappe import _
 from frappe.model.document import Document
 from frappe.utils import now_datetime
 
+from kpc.petroleum_operations.integrations.stock import get_or_create_tank_warehouse
+
 
 class OilTank(Document):
+	def before_insert(self):
+		self.warehouse = get_or_create_tank_warehouse(self)
+
 	def validate(self):
 		self.validate_capacity()
 		self.stamp_state_change()

@@ -9,6 +9,7 @@
   "terminal_code",
   "terminal_name",
   "terminal_type",
+  "company",
   "column_break_1",
   "country",
   "is_active",
@@ -40,6 +41,14 @@
    "reqd": 1,
    "in_list_view": 1,
    "in_standard_filter": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1,
+   "description": "Used to resolve the ERPNext Warehouse/Company context for every Oil Tank at this Terminal."
   },
   {
    "fieldname": "column_break_1",

@@ -4,7 +4,9 @@
 import frappe
 from frappe import _
 from frappe.model.document import Document
+from frappe.utils import flt
 
+from kpc.petroleum_operations.integrations.stock import post_material_receipt
 from kpc.petroleum_operations.utils import assert_tank_available, calculate_standard_volume, log_journey_step
 
 
@@ -37,3 +39,22 @@ class TankMeasurement(Document):
 
 	def on_submit(self):
 		log_journey_step(self.journey_ref, "2. Receipt", self)
+		self.post_stock_receipt()
+
+	def post_stock_receipt(self):
+		"""A Closing reading is the confirmed-received event for this tank -
+		post it into the ERPNext Stock Ledger via the tank's Warehouse, so
+		the physical custody chain and the ERPNext stock ledger agree from
+		the very first step."""
+		if self.measurement_type != "Closing":
+			return
+
+		tank = frappe.get_doc("Oil Tank", self.tank)
+		product = frappe.db.get_value("Oil Shipment", self.shipment, "product")
+
+		# Illustrative valuation only, for the very first stock movement of
+		# this item (ERPNext needs a basic_rate with no prior stock
+		# history) - a real deployment would use a landed-cost figure.
+		rate = flt(frappe.db.get_value("Item", product, "standard_rate")) or None
+
+		post_material_receipt(tank.warehouse, product, self.net_standard_volume_kl, self.journey_ref, rate=rate)

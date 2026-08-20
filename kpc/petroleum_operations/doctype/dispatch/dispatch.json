@@ -19,6 +19,7 @@
   "column_break_2",
   "vehicle_or_vessel_ref",
   "driver_or_agent",
+  "delivery_note",
   "remarks"
  ],
  "fields": [
@@ -104,6 +105,14 @@
    "fieldname": "driver_or_agent",
    "fieldtype": "Data",
    "label": "Driver / Clearing Agent"
+  },
+  {
+   "fieldname": "delivery_note",
+   "fieldtype": "Link",
+   "label": "ERPNext Delivery Note",
+   "options": "Delivery Note",
+   "read_only": 1,
+   "description": "Created and submitted automatically on Dispatch submit; posts the actual Stock Ledger movement."
   },
   {
    "fieldname": "remarks",

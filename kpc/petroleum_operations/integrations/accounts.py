@@ -24,17 +24,17 @@ def create_and_submit_sales_invoice(kpc_invoice) -> frappe.model.document.Docume
 	items = []
 	for line in kpc_invoice.lines:
 		income_account = resolve_income_account(line.product, kpc_invoice.company)
-		items.append(
-			{
-				"item_code": line.product,
-				"qty": flt(line.quantity_kl),
-				"uom": "Kilolitre",
-				"conversion_factor": 1,
-				"rate": flt(line.rate_per_kl),
-				"income_account": income_account,
-				"cost_center": resolve_cost_center(kpc_invoice.company),
-			}
-		)
+		item_row = {
+			"item_code": line.product,
+			"qty": flt(line.quantity_kl),
+			"uom": "Kilolitre",
+			"conversion_factor": 1,
+			"rate": flt(line.rate_per_kl),
+			"income_account": income_account,
+			"cost_center": resolve_cost_center(kpc_invoice.company),
+		}
+		item_row.update(_delivery_reference(line.dispatch))
+		items.append(item_row)
 
 	sales_invoice = frappe.get_doc(
 		{
@@ -50,6 +50,21 @@ def create_and_submit_sales_invoice(kpc_invoice) -> frappe.model.document.Docume
 	sales_invoice.insert()
 	sales_invoice.submit()
 	return sales_invoice
+
+
+def _delivery_reference(dispatch: str) -> dict:
+	"""Every Dispatch (Step 11) already created and submitted its own
+	Delivery Note before Invoice (Step 12) ever runs - reference that
+	Delivery Note row here so ERPNext treats this Sales Invoice line as
+	billing against an already-delivered consignment (correct % Delivered
+	/ % Billed tracking) rather than an independent, undelivered sale.
+	"""
+	delivery_note = frappe.db.get_value("Dispatch", dispatch, "delivery_note")
+	if not delivery_note:
+		return {}
+
+	dn_detail = frappe.db.get_value("Delivery Note Item", {"parent": delivery_note}, "name")
+	return {"delivery_note": delivery_note, "dn_detail": dn_detail}
 
 
 def resolve_income_account(item_code: str, company: str) -> str:

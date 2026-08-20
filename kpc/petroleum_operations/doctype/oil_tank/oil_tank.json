@@ -10,6 +10,7 @@
   "tank_name",
   "terminal",
   "product",
+  "warehouse",
   "column_break_1",
   "current_state",
   "state_reason",
@@ -53,6 +54,14 @@
    "label": "Designated Product",
    "options": "Item",
    "description": "Product this tank is dedicated to. Left blank for multi-product/segregated tanks."
+  },
+  {
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "label": "Warehouse",
+   "options": "Warehouse",
+   "read_only": 1,
+   "description": "Auto-provisioned ERPNext Warehouse mirroring this tank's physical stock, one-to-one."
   },
   {
    "fieldname": "column_break_1",

@@ -6,6 +6,7 @@ from frappe import _
 from frappe.model.document import Document
 from frappe.utils import flt, now_datetime
 
+from kpc.petroleum_operations.integrations.stock import post_material_issue, resolve_origin_tank
 from kpc.petroleum_operations.utils import log_journey_step
 
 
@@ -40,3 +41,20 @@ class Reconciliation(Document):
 
 	def on_submit(self):
 		log_journey_step(self.journey_ref, "9. Reconciliation", self)
+		self.post_transit_loss()
+
+	def post_transit_loss(self):
+		"""A positive variance is a real physical loss - now that it's
+		fiscally recognised (accepted, with justification if it needed
+		one), recognise it in the Stock Ledger too, drawn from the origin
+		tank it left. Gains (negative variance) aren't posted here - a
+		metrology quirk isn't stock a KPC tank actually gained."""
+		if self.variance_kl <= 0:
+			return
+
+		origin_tank_name = resolve_origin_tank(self.journey_ref)
+		origin_tank = frappe.get_doc("Oil Tank", origin_tank_name)
+		movement = frappe.db.get_value("Terminal Receipt", self.terminal_receipt, "movement")
+		product = frappe.db.get_value("Movement", movement, "product")
+
+		post_material_issue(origin_tank.warehouse, product, self.variance_kl, self.journey_ref)
